@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎄 Arix Christmas Tree</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0e0a 0%, #1a2e1a 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            color: #d4af37;
+            font-size: 3rem;
+            font-weight: bold;
+            letter-spacing: 0.3em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #0a5c36;
+            font-size: 1rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+        
+        .greeting {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: #f9e27d;
+            font-size: 0.8rem;
+            letter-spacing: 0.3em;
+            z-index: 100;
+        }
+        
+        .tree-container {
+            position: relative;
+            width: 400px;
+            height: 500px;
+        }
+        
+        .tree {
+            position: absolute;
+            left: 50%;
+            bottom: 50px;
+            transform: translateX(-50%);
+        }
+        
+        .tree-part {
+            width: 0;
+            height: 0;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .tree-part:nth-child(1) {
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-bottom: 100px solid #0a5c36;
+            margin-bottom: -20px;
+        }
+        
+        .tree-part:nth-child(2) {
+            border-left: 80px solid transparent;
+            border-right: 80px solid transparent;
+            border-bottom: 120px solid #0f7042;
+            margin-bottom: -30px;
+        }
+        
+        .tree-part:nth-child(3) {
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 140px solid #0a5c36;
+            margin-bottom: -40px;
+        }
+        
+        .tree-part:nth-child(4) {
+            border-left: 120px solid transparent;
+            border-right: 120px solid transparent;
+            border-bottom: 160px solid #0f7042;
+        }
+        
+        .trunk {
+            width: 30px;
+            height: 60px;
+            background: #8b4513;
+            margin: 0 auto;
+            border-radius: 5px;
+        }
+        
+        .star {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 20px solid #d4af37;
+            animation: twinkle 2s infinite;
+        }
+        
+        .star:after {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 7px;
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 20px solid #d4af37;
+        }
+        
+        .ornament {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: glow 3s infinite alternate;
+        }
+        
+        .ornament.red { background: #dc2626; top: 120px; left: 180px; }
+        .ornament.blue { background: #2563eb; top: 180px; left: 150px; }
+        .ornament.gold { background: #d4af37; top: 200px; left: 220px; }
+        .ornament.purple { background: #7c3aed; top: 250px; left: 130px; }
+        .ornament.green { background: #059669; top: 280px; left: 250px; }
+        .ornament.orange { background: #ea580c; top: 320px; left: 160px; }
+        
+        .snow {
+            position: absolute;
+            top: -10px;
+            color: white;
+            font-size: 20px;
+            animation: fall linear infinite;
+            opacity: 0.8;
+        }
+        
+        .controls {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #d4af37;
+            color: #d4af37;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn:hover {
+            background: #d4af37;
+            color: #000;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        .btn.active {
+            background: #d4af37;
+            color: #000;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        .title {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 100;
+        }
+        
+        .title h2 {
+            color: #d4af37;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .title p {
+            color: #0a5c36;
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+            50% { opacity: 0.5; transform: translateX(-50%) scale(1.2); }
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px currentColor; }
+            100% { box-shadow: 0 0 20px currentColor, 0 0 30px currentColor; }
+        }
+        
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+        
+        .scattered .tree-part {
+            animation: scatter 2s ease-out forwards;
+        }
+        
+        .assembled .tree-part {
+            animation: assemble 2s ease-out forwards;
+        }
+        
+        @keyframes scatter {
+            to {
+                transform: translateX(var(--scatter-x)) translateY(var(--scatter-y)) rotate(var(--scatter-r));
+                opacity: 0.3;
+            }
+        }
+        
+        @keyframes assemble {
+            from {
+                transform: translateX(var(--scatter-x)) translateY(var(--scatter-y)) rotate(var(--scatter-r));
+                opacity: 0.3;
+            }
+            to {
+                transform: translateX(0) translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>ARIX</h1>
+            <p>Signature Interactive</p>
+        </div>
+        
+        <!-- Greeting -->
+        <div class="greeting">
+            圣诞快乐 to 荣耀鱼
+        </div>
+        
+        <!-- Tree -->
+        <div class="tree-container">
+            <div class="tree" id="tree">
+                <div class="star"></div>
+                <div class="tree-part"></div>
+                <div class="tree-part"></div>
+                <div class="tree-part"></div>
+                <div class="tree-part"></div>
+                <div class="trunk"></div>
+                
+                <!-- Ornaments -->
+                <div class="ornament red"></div>
+                <div class="ornament blue"></div>
+                <div class="ornament gold"></div>
+                <div class="ornament purple"></div>
+                <div class="ornament green"></div>
+                <div class="ornament orange"></div>
+            </div>
+        </div>
+        
+        <!-- Snow -->
+        <div class="snow" style="left: 10%; animation-duration: 3s; animation-delay: 0s;">❄</div>
+        <div class="snow" style="left: 20%; animation-duration: 4s; animation-delay: 1s;">❅</div>
+        <div class="snow" style="left: 30%; animation-duration: 3.5s; animation-delay: 0.5s;">❄</div>
+        <div class="snow" style="left: 40%; animation-duration: 5s; animation-delay: 1.8s;">❅</div>
+        <div class="snow" style="left: 50%; animation-duration: 4.2s; animation-delay: 0.3s;">❄</div>
+        <div class="snow" style="left: 60%; animation-duration: 3.8s; animation-delay: 2s;">❅</div>
+        <div class="snow" style="left: 70%; animation-duration: 4.5s; animation-delay: 0.8s;">❄</div>
+        <div class="snow" style="left: 80%; animation-duration: 3.2s; animation-delay: 1.5s;">❅</div>
+        <div class="snow" style="left: 90%; animation-duration: 4.8s; animation-delay: 0.2s;">❄</div>
+        
+        <!-- Title -->
+        <div class="title">
+            <h2 id="sceneTitle">Grand Emerald Fir</h2>
+            <p>A Cinematic Digital Experience</p>
+        </div>
+        
+        <!-- Controls -->
+        <div class="controls">
+            <button class="btn" id="disperseBtn">Disperse</button>
+            <button class="btn active" id="assembleBtn">Assemble</button>
+        </div>
+    </div>
+
+    <script>
+        const tree = document.getElementById('tree');
+        const disperseBtn = document.getElementById('disperseBtn');
+        const assembleBtn = document.getElementById('assembleBtn');
+        const sceneTitle = document.getElementById('sceneTitle');
+        
+        let isAssembled = true;
+        
+        // Set random scatter positions
+        const treeParts = tree.querySelectorAll('.tree-part');
+        treeParts.forEach((part, index) => {
+            const x = (Math.random() - 0.5) * 800;
+            const y = (Math.random() - 0.5) * 600;
+            const r = (Math.random() - 0.5) * 720;
+            
+            part.style.setProperty('--scatter-x', x + 'px');
+            part.style.setProperty('--scatter-y', y + 'px');
+            part.style.setProperty('--scatter-r', r + 'deg');
+        });
+        
+        function updateState() {
+            if (isAssembled) {
+                tree.className = 'tree assembled';
+                assembleBtn.classList.add('active');
+                disperseBtn.classList.remove('active');
+                sceneTitle.textContent = 'Grand Emerald Fir';
+            } else {
+                tree.className = 'tree scattered';
+                disperseBtn.classList.add('active');
+                assembleBtn.classList.remove('active');
+                sceneTitle.textContent = 'Stellar Fusion';
+            }
+        }
+        
+        disperseBtn.addEventListener('click', () => {
+            isAssembled = false;
+            updateState();
+        });
+        
+        assembleBtn.addEventListener('click', () => {
+            isAssembled = true;
+            updateState();
+        });
+        
+        // Initialize
+        updateState();
+        
+        console.log('🎄 Christmas Tree loaded successfully!');
+    </script>
+</body>
+</html>
